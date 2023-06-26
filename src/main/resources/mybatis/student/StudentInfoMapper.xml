@@ -15,6 +15,9 @@
     </insert>
 
 
+    <delete id="remove">
+        delete from s_student_info where id = #{studentId}
+    </delete>
 
 
     <!-- 查询学生信息列表 -->

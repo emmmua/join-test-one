@@ -114,7 +114,20 @@ http://localhost:8080/index
 
 
 
+## 新增工具类
+
+src/main/java/com/yizhi/common/utils/IdCardUtil.java 判断身份证合法性
+src/main/java/com/yizhi/common/utils/PhoneUtil.java 判断手机号合法性
+
+
+
 ## 报错总结
+
+- SQL导入
+  - 导入报错，原因是mysql版本是5.6没有utf8mb4字符集
+    - 解决方法替换为utf8mb3
+
+
 
 - 分页查询
 

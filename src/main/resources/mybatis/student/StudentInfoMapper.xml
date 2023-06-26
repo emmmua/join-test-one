@@ -2,8 +2,62 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.yizhi.student.dao.StudentInfoDao">
-	
-	
+
+
+    <insert id="save" parameterType="com.yizhi.student.domain.StudentInfoDO">
+        insert into s_student_info (student_id, exam_id, class_id, student_name, certify, mail_address, foreign_lanaguage,
+                                  student_sex, nation, political, card_id, telephone, subject_type, tocollege, tocampus, tomajor, birthplace,
+                                  grade, isstate, birthday, note, add_time, add_userid, edit_time, edit_userid)
+        values (#{studentId}, #{examId}, #{classId}, #{studentName}, #{certify}, #{mailAddress}, #{foreignLanaguage},
+                #{studentSex}, #{nation}, #{political}, #{cardId}, #{telephone}, #{subjectType}, #{tocollege}, #{tocampus},
+                #{tomajor}, #{birthplace}, #{grade}, #{isstate}, #{birthday}, #{note}, #{addTime}, #{addUserid}, #{editTime},
+                #{editUserid})
+    </insert>
+
+
+
+
+    <!-- 查询学生信息列表 -->
+    <select id="list" parameterType="java.util.Map" resultType="com.yizhi.student.domain.StudentInfoDO">
+        select * from s_student_info
+        <where>
+            <if test="name != null and name != ''">
+                and student_name like concat('%', #{name}, '%')
+            </if>
+            <if test="tocollegeId != null and tocollegeId != ''">
+                and tocollege = #{tocollegeId}
+            </if>
+            <if test="tomajorId != null and tomajorId != ''">
+                and tomajor = #{tomajorId}
+            </if>
+            <if test="classId != null and classId != ''">
+                and class_id = #{classId}
+            </if>
+        </where>
+        order by add_time desc
+        limit #{pageSize} offset #{offset}
+    </select>
+
+
+    <!-- 查询符合条件的学生信息数量 -->
+    <select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(*) from s_student_info
+        <where>
+            <if test="name != null and name != ''">
+                and student_name like concat('%', #{name}, '%')
+            </if>
+            <if test="tocollegeId != null and tocollegeId != ''">
+                and tocollege = #{tocollegeId}
+            </if>
+            <if test="tomajorId != null and tomajorId != ''">
+                and tomajor = #{tomajorId}
+            </if>
+            <if test="classId != null and classId != ''">
+                and class_id = #{classId}
+            </if>
+        </where>
+    </select>
+
 
 
 </mapper>

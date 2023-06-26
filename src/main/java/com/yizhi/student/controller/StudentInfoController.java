@@ -1,29 +1,18 @@
 package com.yizhi.student.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
+import com.yizhi.common.annotation.Log;
+import com.yizhi.common.utils.*;
+import com.yizhi.student.domain.StudentInfoDO;
+import com.yizhi.student.service.StudentInfoService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.yizhi.common.annotation.Log;
-import com.yizhi.common.controller.BaseController;
-import com.yizhi.common.utils.*;
-import com.yizhi.student.domain.ClassDO;
-import com.yizhi.student.service.ClassService;
-import com.yizhi.student.service.CollegeService;
-import com.yizhi.student.service.MajorService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import com.yizhi.student.domain.StudentInfoDO;
-import com.yizhi.student.service.StudentInfoService;
 
 /**
  * 生基础信息表
@@ -33,30 +22,77 @@ import com.yizhi.student.service.StudentInfoService;
 @RequestMapping("/student/studentInfo")
 public class StudentInfoController {
 
-
 	@Autowired
 	private StudentInfoService studentInfoService;
-    //
+
 	@Log("学生信息保存")
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("student:studentInfo:add")
-	public R save(StudentInfoDO studentInfoDO){
+	public R someMethod(StudentInfoDO studentInfo) {
+		// 检查参数是否为空
+		if (studentInfo == null) {
+			System.out.println("学生信息不能为空！");
+			return R.error("学生信息不能为空！");
+		}
 
-		return null;
+		// 检查学生姓名是否为空
+		if (StringUtils.isBlank(studentInfo.getStudentName())) {
+			System.out.println("学生姓名不能为空！");
+			return R.error("学生姓名不能为空！");
+
+		}
+
+		// 检查身份证号格式是否正确
+		if (!IdCardUtil.validateCard(studentInfo.getCertify())) {
+			System.out.println("身份证号格式不正确！");
+			return R.error("身份证号格式不正确！");
+		}
+
+		// 检查手机号格式是否正确
+		if (!PhoneUtil.isMobileExact(studentInfo.getTelephone())) {
+			System.out.println("手机号格式不正确！");
+			return R.error("手机号格式不正确！");
+		}
+
+		// 其实还可以查询其他班级、专业、学院是否存在，这里我不做判断了
+		System.out.println(studentInfo);
+
+		// 调用保存方法进行保存
+		studentInfoService.save(studentInfo);
+		return R.ok("保存成功！");
 	}
 
 	/**
-	 * 可分页 查询
+	 * 查询学生信息列表
+	 * @param params 请求参数，包含currPage、pageSize、name、tocollegeId、tomajorId、classId等字段
+	 * @return PageUtils对象，包含查询结果和分页信息
 	 */
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("student:studentInfo:studentInfo")
-	public PageUtils list(@RequestParam Map<String, Object> params){
+	public PageUtils list(@RequestParam Map<String, Object> params) {
+		// 获取当前页码和每页显示的数据量
+		int pageNum = Integer.parseInt(params.get("currPage").toString());
+		int pageSize = Integer.parseInt(params.get("pageSize").toString());
 
-		return null;
+		// 将params中的当前页码和每页显示的数据量转换成Integer
+		params.put("pageNum", pageNum);
+		params.put("pageSize", pageSize);
 
+
+		// 计算偏移量
+		int offset = (pageNum - 1) * pageSize;
+		params.put("offset", offset);
+		// 调用Service层的list方法查询符合条件的学生信息列表
+		List<StudentInfoDO> list = studentInfoService.list(params);
+		// 统计符合条件的数据总数
+		int total = studentInfoService.count(params);
+		// 将查询结果和分页信息封装到PageUtils对象中并返回
+		return new PageUtils(list, total, pageSize, pageNum);
 	}
+
+
 
 
 	/**

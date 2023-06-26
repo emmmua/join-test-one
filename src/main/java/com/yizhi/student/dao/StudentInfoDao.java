@@ -29,5 +29,5 @@ public interface StudentInfoDao {
 	
 	int remove(Integer id);
 	
-	int batchRemove(Integer[] ids);
+	int batchRemove(@Param("ids") Integer[] ids);
 }

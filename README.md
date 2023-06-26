@@ -63,9 +63,7 @@ http://localhost:8080/index
 
 
 
-## 3.学生管理模块分析
-
-### 统一返回处理类R
+## 2.统一返回处理类R
 
 - 操作成功code返回0
 
@@ -85,43 +83,16 @@ http://localhost:8080/index
 }
 ```
 
-### 1.插入
-
-**URL**
-
-- POST /save
-
-**请求参数**
-
-| 参数名      | 类型   | 是否必填 | 描述               |
-| ----------- | ------ | -------- | ------------------ |
-| studentInfo | object | 是       | 学生信息对象的实例 |
-
-### 2.查询
-
-**URL**
-
-- GET /student/studentInfo/list
-
-**请求参数**
-
-| 参数名   | 类型 | 是否必填 | 描述                  |
-| -------- | ---- | -------- | --------------------- |
-| currPage | int  | 是       | 当前页码，从1开始计数 |
-| pageSize | int  | 是       | 每页显示的记录数      |
 
 
-
-
-
-## 新增工具类
+## 3.新增工具类
 
 src/main/java/com/yizhi/common/utils/IdCardUtil.java 判断身份证合法性
 src/main/java/com/yizhi/common/utils/PhoneUtil.java 判断手机号合法性
 
 
 
-## 报错总结
+## 4.报错总结
 
 - SQL导入
   - 导入报错，原因是mysql版本是5.6没有utf8mb4字符集
@@ -143,3 +114,9 @@ src/main/java/com/yizhi/common/utils/PhoneUtil.java 判断手机号合法性
     - 解决方法：
   
   
+
+## 5.改进建议
+
+1.批量删除可以使用Async异步处理
+
+2.

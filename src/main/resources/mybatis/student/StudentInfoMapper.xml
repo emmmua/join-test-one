@@ -15,8 +15,18 @@
     </insert>
 
 
+    <!-- 删除单个学生信息 -->
     <delete id="remove">
         delete from s_student_info where id = #{studentId}
+    </delete>
+
+
+    <!-- 批量删除学生信息-->
+    <delete id="batchRemove">
+        delete from s_student_info where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
     </delete>
 
 

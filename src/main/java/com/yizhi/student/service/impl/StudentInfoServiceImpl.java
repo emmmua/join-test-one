@@ -1,6 +1,7 @@
 package com.yizhi.student.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -54,7 +55,7 @@ public class StudentInfoServiceImpl implements StudentInfoService {
 	public int remove(Integer id){
 		return studentInfoDao.remove(id);
 	}
-	
+
 	@Override
 	public int batchRemove(Integer[] ids){
 		return studentInfoDao.batchRemove(ids);

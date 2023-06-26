@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -132,7 +133,16 @@ public class StudentInfoController {
     @RequiresPermissions("student:studentInfo:batchRemove")
     public R remove(@RequestParam("ids[]") Integer[] ids) {
 
-        return null;
+        // 循环输出ids
+        for (Integer id : ids) {
+            System.out.println(id + " " + "数组...");
+        }
+
+        int batchRemove = studentInfoService.batchRemove(ids);
+        if (batchRemove <= 0) {
+            return R.error("批量删除失败！");
+        }
+        return R.ok("批量删除成功！");
     }
 
 

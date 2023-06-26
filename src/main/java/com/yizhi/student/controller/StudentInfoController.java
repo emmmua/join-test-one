@@ -33,8 +33,6 @@ import com.yizhi.student.service.StudentInfoService;
 @RequestMapping("/student/studentInfo")
 public class StudentInfoController {
 
-	
-
 
 	@Autowired
 	private StudentInfoService studentInfoService;
@@ -44,7 +42,7 @@ public class StudentInfoController {
 	@PostMapping("/save")
 	@RequiresPermissions("student:studentInfo:add")
 	public R save(StudentInfoDO studentInfoDO){
-	
+
 		return null;
 	}
 

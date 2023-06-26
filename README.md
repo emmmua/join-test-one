@@ -1,24 +1,26 @@
-项目部署说明:
-1.项目基于  Maven 进行依赖管理
-2.数据库    MySql5.7(8.0)  项目文件中有数据库结构yizhi_db.sql文件,创建库后导入即可
-3.缓存模块  Redis 6.x
-4.JDK 1.8  SpringBoot2.0
+## 1.环境说明:
+
+* JDK 8
+* mysql 5.7/(8.x)+  项目文件中有数据库结构yizhi_db.sql文件,创建库后导入即可
+* Redis 6.x +
+* Maven 3.6 +
+* 数据库脚本在项目中
 
 配置文件说明:
+
 1.项目启动 默认加载 application-dev.yml
-2.MySql Redis 连接配置修改
+2.MySql , Redis 连接配置需要修改为你本地连接
 
 程序访问入口:
+
 http://localhost:8080/index
 平台登录帐号: admin 密码: 111111
 
-模块:  学生管理模块
-需要操作的类:   com.yizhi.student.controller.StudentInfoController
-需要完成的功能:  学生信息的,list查询接口,save保存接口,update修改接口,删除接口
 
-mybatis映射文件: 完善 mybits/student/StudentInfoMapper.xml
 
-## 项目依赖库说明
+## 2.项目依赖库说明
+
+拿到一个新项目我一般是先看pom文件，主要是看用到了什么技术
 
 - `spring-boot-starter`：Spring Boot 的核心依赖包，提供 Spring Boot 应用程序开发所需的基本配置和功能。
 - `spring-boot-starter-web`：Spring Boot Web 开发依赖包，提供构建 Web 应用程序所需的相关库和配置。
@@ -56,3 +58,30 @@ mybatis映射文件: 完善 mybits/student/StudentInfoMapper.xml
 - `thumbnailator`：Java 图片缩略图库。
 - `spring-boot-starter-freemarker`：Spring Freemarker 模板引擎快速集成启动器。
 - `freemarker`：Freemarker 模板引擎。
+
+所以对于学生管理模块模块功能的增删改查我们使用mybatis即可。
+
+
+
+## 3.学生管理模块分析
+
+### 统一返回处理类R
+
+- 操作成功code返回0
+
+```json
+{
+    code: 0,
+    msg: "操作成功消息"
+}
+```
+
+- 操作失败code返回其他（如500）
+
+```json
+{
+    code: 500,
+    msg: "操作失败消息"
+}
+```
+

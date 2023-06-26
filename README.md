@@ -18,51 +18,6 @@ http://localhost:8080/index
 
 
 
-## 2.项目依赖库说明
-
-拿到一个新项目我一般是先看pom文件，主要是看用到了什么技术
-
-- `spring-boot-starter`：Spring Boot 的核心依赖包，提供 Spring Boot 应用程序开发所需的基本配置和功能。
-- `spring-boot-starter-web`：Spring Boot Web 开发依赖包，提供构建 Web 应用程序所需的相关库和配置。
-- `mysql-connector-java`：MySQL 数据库 JDBC 驱动。
-- `mybatis`：MyBatis 持久化框架。
-- `mybatis-spring-boot-starter`：MyBatis Spring Boot 快速集成启动器。
-- `druid`：阿里巴巴 Druid 数据库连接池。
-- `commons-lang3`：Apache Commons Lang3 工具类库。
-- `commons-configuration`：Apache Commons Configuration 配置读取和写入工具库。
-- `commons-io`：Apache Commons IO 文件、流等操作工具库。
-- `shiro-core`：Apache Shiro 权限认证和授权框架核心库。
-- `shiro-spring`：Apache Shiro Spring Boot 快速集成启动器。
-- `thymeleaf`：Thymeleaf 模板引擎。
-- `ehcache`：Ehcache 缓存库。
-- `quartz`：Quartz 定时任务调度库。
-- `spring-boot-starter-websocket`：Spring WebSocket 模块快速集成启动器。
-- `spring-context-support`：Spring 上下文支持库。
-- `springfox-swagger2`：Swagger API 文档生成工具库。
-- `springfox-swagger-ui`：Swagger UI 生成库。
-- `knife4j-spring-boot-starter`：Knife4j Swagger UI 增强版快速集成启动器。
-- `spring-boot-starter-data-redis`：Redis 缓存库。
-- `jedis`：Redis 客户端库。
-- `jsoup`：Jsoup HTML 解析库。
-- `poi`：Apache POI Office 工具库。
-- `kaptcha`：验证码生成库。
-- `spring-boot-starter-amqp`：Spring AMQP 快速集成启动器。
-- `lombok`：Java 实体类相关注解和方法自动生成工具库。
-- `weixin-java-miniapp`：微信小程序 Java SDK。
-- `avro`：Apache Avro 序列化库。
-- `oshi-core`：OSHI 系统监控库。
-- `spring-boot-starter-tomcat`：Spring Boot 内嵌 Tomcat 容器快速集成启动器。
-- `bcprov-jdk15on`：Bouncy Castle 密码学库。
-- `jjwt`：JSON Web Token 实现库。
-- `emoji-java`：Emoji 处理工具库。
-- `thumbnailator`：Java 图片缩略图库。
-- `spring-boot-starter-freemarker`：Spring Freemarker 模板引擎快速集成启动器。
-- `freemarker`：Freemarker 模板引擎。
-
-所以对于学生管理模块模块功能的增删改查我们使用mybatis即可。
-
-
-
 ## 2.统一返回处理类R
 
 - 操作成功code返回0
@@ -114,9 +69,61 @@ src/main/java/com/yizhi/common/utils/PhoneUtil.java 判断手机号合法性
     - 解决方法：
   
   
+  
+- 批量删除
+
+  - 传递ids到mapper.xml时无法解析ids
+    - 解决方法：使用`@Param("ids")`指定参数名即可
+  
+  
+  
+  
 
 ## 5.改进建议
 
 1.批量删除可以使用Async异步处理
 
-2.
+2.对于查询学生的请求参数`Map<String, Object> params`替换为对于需要的参数，这样封装可能比较抽象，不过扩展性比较强
+
+## 6.项目依赖库说明
+
+拿到一个新项目我一般是先看pom文件，主要是看用到了什么技术
+
+- `spring-boot-starter`：Spring Boot 的核心依赖包，提供 Spring Boot 应用程序开发所需的基本配置和功能。
+- `spring-boot-starter-web`：Spring Boot Web 开发依赖包，提供构建 Web 应用程序所需的相关库和配置。
+- `mysql-connector-java`：MySQL 数据库 JDBC 驱动。
+- `mybatis`：MyBatis 持久化框架。
+- `mybatis-spring-boot-starter`：MyBatis Spring Boot 快速集成启动器。
+- `druid`：阿里巴巴 Druid 数据库连接池。
+- `commons-lang3`：Apache Commons Lang3 工具类库。
+- `commons-configuration`：Apache Commons Configuration 配置读取和写入工具库。
+- `commons-io`：Apache Commons IO 文件、流等操作工具库。
+- `shiro-core`：Apache Shiro 权限认证和授权框架核心库。
+- `shiro-spring`：Apache Shiro Spring Boot 快速集成启动器。
+- `thymeleaf`：Thymeleaf 模板引擎。
+- `ehcache`：Ehcache 缓存库。
+- `quartz`：Quartz 定时任务调度库。
+- `spring-boot-starter-websocket`：Spring WebSocket 模块快速集成启动器。
+- `spring-context-support`：Spring 上下文支持库。
+- `springfox-swagger2`：Swagger API 文档生成工具库。
+- `springfox-swagger-ui`：Swagger UI 生成库。
+- `knife4j-spring-boot-starter`：Knife4j Swagger UI 增强版快速集成启动器。
+- `spring-boot-starter-data-redis`：Redis 缓存库。
+- `jedis`：Redis 客户端库。
+- `jsoup`：Jsoup HTML 解析库。
+- `poi`：Apache POI Office 工具库。
+- `kaptcha`：验证码生成库。
+- `spring-boot-starter-amqp`：Spring AMQP 快速集成启动器。
+- `lombok`：Java 实体类相关注解和方法自动生成工具库。
+- `weixin-java-miniapp`：微信小程序 Java SDK。
+- `avro`：Apache Avro 序列化库。
+- `oshi-core`：OSHI 系统监控库。
+- `spring-boot-starter-tomcat`：Spring Boot 内嵌 Tomcat 容器快速集成启动器。
+- `bcprov-jdk15on`：Bouncy Castle 密码学库。
+- `jjwt`：JSON Web Token 实现库。
+- `emoji-java`：Emoji 处理工具库。
+- `thumbnailator`：Java 图片缩略图库。
+- `spring-boot-starter-freemarker`：Spring Freemarker 模板引擎快速集成启动器。
+- `freemarker`：Freemarker 模板引擎。
+
+所以对于学生管理模块模块功能的增删改查我们使用mybatis即可。

@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -60,7 +58,12 @@ public class StudentInfoController {
         System.out.println(studentInfo);
 
         // 调用保存方法进行保存
-        studentInfoService.save(studentInfo);
+        int save = studentInfoService.save(studentInfo);
+        // 判断保存是否成功
+        if (save <= 0) {
+            System.out.println("保存失败！");
+            return R.error("保存失败！");
+        }
         return R.ok("保存成功！");
     }
 
@@ -103,8 +106,42 @@ public class StudentInfoController {
     @PostMapping("/update")
     @RequiresPermissions("student:studentInfo:edit")
     public R update(StudentInfoDO studentInfo) {
+        // 检查参数是否为空
+        if (studentInfo == null) {
+            System.out.println("学生信息不能为空！");
+            return R.error("学生信息不能为空！");
+        }
 
-        return null;
+        // 检查学生姓名是否为空
+        if (StringUtils.isBlank(studentInfo.getStudentName())) {
+            System.out.println("学生姓名不能为空！");
+            return R.error("学生姓名不能为空！");
+
+        }
+
+        // 检查身份证号格式是否正确
+        if (!IdCardUtil.validateCard(studentInfo.getCertify())) {
+            System.out.println("身份证号格式不正确！");
+            return R.error("身份证号格式不正确！");
+        }
+
+        // 检查手机号格式是否正确
+        if (!PhoneUtil.isMobileExact(studentInfo.getTelephone())) {
+            System.out.println("手机号格式不正确！");
+            return R.error("手机号格式不正确！");
+        }
+
+        // 其实还可以查询其他班级、专业、学院是否存在，这里我不做判断了
+        System.out.println(studentInfo);
+
+        // 调用保存方法进行保存
+        int update = studentInfoService.update(studentInfo);
+        // 判断保存是否成功
+        if (update <= 0) {
+            System.out.println("修改失败！");
+            return R.error("修改失败！");
+        }
+        return R.ok("修改成功！");
     }
 
     /**

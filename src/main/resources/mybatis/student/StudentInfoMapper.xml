@@ -14,7 +14,6 @@
                 #{editUserid})
     </insert>
 
-
     <!-- 删除单个学生信息 -->
     <delete id="remove">
         delete from s_student_info where id = #{studentId}
@@ -71,6 +70,40 @@
         </where>
     </select>
 
+    <!-- 根据id查询学生信息 -->
+    <select id="get" resultType="com.yizhi.student.domain.StudentInfoDO">
+        select * from s_student_info where id = #{id}
+    </select>
+
+
+    <!-- 根据主键更新学生基础信息表 -->
+    <update id="update" parameterType="com.yizhi.student.domain.StudentInfoDO">
+        update s_student_info
+        set student_id = #{studentId},
+            exam_id = #{examId},
+            class_id = #{classId},
+            student_name = #{studentName},
+            certify = #{certify},
+            mail_address = #{mailAddress},
+            foreign_lanaguage = #{foreignLanaguage},
+            student_sex = #{studentSex},
+            nation = #{nation},
+            political = #{political},
+            card_id = #{cardId},
+            telephone = #{telephone},
+            subject_type = #{subjectType},
+            tocollege = #{tocollege},
+            tocampus = #{tocampus},
+            tomajor = #{tomajor},
+            birthplace = #{birthplace},
+            grade = #{grade},
+            isstate = #{isstate},
+            birthday = #{birthday},
+            note = #{note},
+            edit_time = now(),
+            edit_userid = #{editUserid}
+        where id = #{id}
+    </update>
 
 
 </mapper>
